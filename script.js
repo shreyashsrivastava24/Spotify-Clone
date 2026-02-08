@@ -79,7 +79,26 @@ const playMusic = (track, pause = false) => {
   }
   document.querySelector(".songinfo").innerHTML = formatSongName(track);
   document.querySelector(".songtime").innerHTML = "00:00/00:00";
+  // Update UI highlight for currently playing song
+  updatePlayingHighlight(track);
 };
+
+// Highlight the currently playing song in the list
+function updatePlayingHighlight(track) {
+  const name = formatSongName(track);
+  const listItems = document.querySelectorAll('.songList li');
+  listItems.forEach(li => {
+    const info = li.querySelector('.info');
+    if (!info) return;
+    const titleEl = info.firstElementChild;
+    if (!titleEl) return;
+    if (titleEl.innerHTML === name && !currentSong.paused) {
+      li.classList.add('playing');
+    } else {
+      li.classList.remove('playing');
+    }
+  });
+}
 
 // Function to load and display songs from a folder
 async function loadPlaylist(folderPath, playlistName) {
@@ -90,7 +109,7 @@ async function loadPlaylist(folderPath, playlistName) {
     .querySelector(".songList")
     .getElementsByTagName("ul")[0];
   
-  songUL.innerHTML = `<li style="padding: 10px; border-bottom: 1px solid #444; font-weight: bold; color: #1DB954;">${playlistName}</li>`;
+  songUL.innerHTML = `<li style="padding: 10px; border-bottom: 1px solid #444; font-weight: bold; color: #ffffff;">${playlistName}</li>`;
 
   for (const song of playlistSongs) {
     songUL.innerHTML += `
@@ -167,9 +186,13 @@ async function main() {
     if (currentSong.paused) {
       currentSong.play();
       play.src = "pause.svg";
+      // add glow when resuming
+      updatePlayingHighlight(currentSong.src.split('/').slice(-1)[0]);
     } else {
       currentSong.pause();
       play.src = "play.svg";
+      // remove glow when paused
+      updatePlayingHighlight(currentSong.src.split('/').slice(-1)[0]);
     }
   });
 

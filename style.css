@@ -77,6 +77,7 @@ body {
   display: flex;
   justify-content: space-between;
   background-color: rgb(34 34 34);
+  border-radius: 9px;
 }
 
 /* selecting direct children of header */
@@ -433,7 +434,7 @@ body.light .bg-black {
 }
 
 body.light .bg-grey {
-  background-color: #79c844;
+  background-color: #44b6c8;
 }
 
 body.light .card {
@@ -442,7 +443,7 @@ body.light .card {
 }
 
 body.light .header {
-  background-color: #fbfbfb;
+  background-color: #fbfbfb81;
 }
 
 body.light .songinfo,
@@ -452,9 +453,45 @@ body.light .songtime {
 
 body.light .playbar {
   filter: invert(0);
-  background: #ffffff;
+  background: #fbfbfb81;
 }
 
 body.light .invert {
   filter: invert(0);
+}
+
+/* Glow for currently playing song */
+.songList ul li.playing {
+  box-shadow: 0 0 18px rgba(29,185,84,0.9);
+  border-color: #1DB954;
+  animation: pulseGlow 1.2s infinite alternate;
+}
+
+@keyframes pulseGlow {
+  from {
+    transform: translateY(0);
+    filter: drop-shadow(0 0 6px rgba(29,185,84,0.6));
+  }
+  to {
+    transform: translateY(-2px);
+    filter: drop-shadow(0 0 18px rgba(29,185,84,0.9));
+  }
+}
+
+/* Light-theme override: softer blue glow that suits light backgrounds */
+body.light .songList ul li.playing {
+  box-shadow: 0 0 16px rgba(59,130,246,0.85);
+  border-color: #3b82f6;
+  animation: pulseGlowLight 1.2s infinite alternate;
+}
+
+@keyframes pulseGlowLight {
+  from {
+    transform: translateY(0);
+    filter: drop-shadow(0 0 6px rgba(59,130,246,0.45));
+  }
+  to {
+    transform: translateY(-2px);
+    filter: drop-shadow(0 0 14px rgba(59,130,246,0.85));
+  }
 }
