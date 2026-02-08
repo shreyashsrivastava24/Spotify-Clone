@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 64 64" width="160" height="160" fill="black">
+  <title>Playlist with Music Note</title>
+  <!-- stacked bookshelf-like rows -->
+  <rect x="6" y="10" width="38" height="6" rx="2"/>
+  <rect x="6" y="22" width="50" height="6" rx="2"/>
+  <rect x="6" y="34" width="30" height="6" rx="2"/>
+  <rect x="6" y="46" width="44" height="6" rx="2"/>
+  
+  <!-- music note accent -->
+  <path d="M50 12v20a6 6 0 1 1-2-4V12h6z" fill="black"/>
+</svg>
