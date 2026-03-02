@@ -47,7 +47,7 @@ body {
   padding: 23px 14px;
   font-weight: bold;
   align-items: center;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .heading img {
@@ -61,7 +61,7 @@ body {
 
 .footer {
   display: flex;
-  font-size: 10px;
+  font-size: 11px;
   color: grey;
   gap: 13px;
   position: absolute;
@@ -230,7 +230,7 @@ body {
 }
 
 .songList .info {
-  font-size: 13px;
+  font-size: 14px;
   width: 344px;
   margin-top: 12px;
 }
@@ -315,7 +315,7 @@ body {
 
 @media (max-width: 1200px) {
   .left {
-    background-color: black;
+    background-color: rgb(0, 0, 0);
     position: absolute;
     left: -120%;
     transition: all 0.3s;
@@ -430,7 +430,7 @@ body.light {
 }
 
 body.light .bg-black {
-  background-color: #000000;
+  background-color: #eceff0;
 }
 
 body.light .bg-grey {
