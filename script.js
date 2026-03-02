@@ -3,6 +3,67 @@ console.log("Lets write js");
 let currentSong = new Audio();
 let songs;
 let currentPlaylist = [];
+let sleepTimerTimeout = null;
+let sleepTimerInterval = null;
+let sleepTimerEnd = null;
+
+function clearSleepTimer(updateSelect = true, statusText = "Off") {
+  if (sleepTimerTimeout) {
+    clearTimeout(sleepTimerTimeout);
+    sleepTimerTimeout = null;
+  }
+  if (sleepTimerInterval) {
+    clearInterval(sleepTimerInterval);
+    sleepTimerInterval = null;
+  }
+  sleepTimerEnd = null;
+
+  const timerStatus = document.getElementById("timerStatus");
+  if (timerStatus) timerStatus.innerText = statusText;
+
+  if (updateSelect) {
+    const timerSelect = document.getElementById("sleepTimerSelect");
+    if (timerSelect) timerSelect.value = "0";
+  }
+}
+
+function updateSleepTimerStatus() {
+  if (!sleepTimerEnd) return;
+
+  const timerStatus = document.getElementById("timerStatus");
+  if (!timerStatus) return;
+
+  const remainingMs = sleepTimerEnd - Date.now();
+  if (remainingMs <= 0) {
+    timerStatus.innerText = "Ending...";
+    return;
+  }
+
+  const totalSeconds = Math.ceil(remainingMs / 1000);
+  const mins = Math.floor(totalSeconds / 60);
+  const secs = String(totalSeconds % 60).padStart(2, "0");
+  timerStatus.innerText = `${mins}:${secs}`;
+}
+
+function setSleepTimer(minutes) {
+  clearSleepTimer(false);
+
+  if (!minutes || minutes <= 0) {
+    clearSleepTimer(true, "Off");
+    return;
+  }
+
+  sleepTimerEnd = Date.now() + minutes * 60 * 1000;
+  updateSleepTimerStatus();
+  sleepTimerInterval = setInterval(updateSleepTimerStatus, 1000);
+
+  sleepTimerTimeout = setTimeout(() => {
+    currentSong.pause();
+    play.src = "play.svg";
+    updatePlayingHighlight(currentSong.src.split("/").slice(-1)[0]);
+    clearSleepTimer(true, "Ended");
+  }, minutes * 60 * 1000);
+}
 
 function secondsToMinutesSeconds(seconds) {
   if (isNaN(seconds) || seconds < 0) {
@@ -267,6 +328,15 @@ async function main() {
         10;
     }
   });
+
+  // Sleep timer (auto-stop playback)
+  const timerSelect = document.getElementById("sleepTimerSelect");
+  if (timerSelect) {
+    timerSelect.addEventListener("change", (e) => {
+      const minutes = parseInt(e.target.value, 10);
+      setSleepTimer(minutes);
+    });
+  }
 
   // Theme toggle (Dark / Light)
   const themeBtn = document.getElementById("themeToggle");

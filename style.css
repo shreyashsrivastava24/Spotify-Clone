@@ -89,6 +89,16 @@ body {
   padding: 16px;
 }
 
+body:not(.light) .spotifyPlaylists {
+  border-radius: 10px;
+  background: linear-gradient(
+    180deg,
+    rgba(90, 44, 132, 0.95) 0%,
+    rgba(48, 28, 68, 0.85) 28%,
+    rgba(18, 18, 18, 0) 58%
+  );
+}
+
 .spotifyPlaylists h1 {
   padding: 16px;
 }
@@ -309,6 +319,49 @@ body {
   cursor: pointer;
 }
 
+.sleepTimer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #111;
+  font-size: 12px;
+  border: 1px solid #8e8e8e;
+  border-radius: 999px;
+  padding: 4px 8px;
+  background: linear-gradient(145deg, #fefefe, #d8d8d8);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.sleepTimerTag {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  color: #333;
+}
+
+.sleepTimer select {
+  border: 1px solid #888;
+  border-radius: 999px;
+  padding: 2px 8px;
+  background: #fff;
+  color: #111;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.timerStatus {
+  min-width: 58px;
+  text-align: center;
+  border-radius: 999px;
+  background: #181818;
+  color: #f7f7f7;
+  padding: 2px 8px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
 .range input {
   cursor: pointer;
 }
@@ -363,6 +416,10 @@ body {
 
   .songbuttons {
     height: 28px;
+  }
+
+  .sleepTimer {
+    justify-content: center;
   }
 
   .card {
