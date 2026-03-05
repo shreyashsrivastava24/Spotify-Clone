@@ -198,6 +198,8 @@ async function loadPlaylist(folderPath, playlistName) {
       });
     }
   });
+
+  return playlistSongs;
 }
 
 async function main() {
@@ -238,7 +240,10 @@ async function main() {
     card.addEventListener("click", async () => {
       const folderPath = card.getAttribute("data-folder");
       const playlistName = card.querySelector("h2").innerHTML;
-      loadPlaylist(folderPath, playlistName);
+      const playlistSongs = await loadPlaylist(folderPath, playlistName);
+      if (playlistSongs.length > 0) {
+        playMusic(playlistSongs[0]);
+      }
     });
   });
 
@@ -298,6 +303,20 @@ async function main() {
     let currentPlaylistToUse = currentPlaylist.length > 0 ? currentPlaylist : songs;
     let index = currentPlaylistToUse.indexOf(currentSong.src.split("/").slice(-1)[0]);
     if (index + 1 < currentPlaylistToUse.length) playMusic(currentPlaylistToUse[index + 1]);
+  });
+
+  // Auto-play next song when current song ends
+  currentSong.addEventListener("ended", () => {
+    let currentPlaylistToUse = currentPlaylist.length > 0 ? currentPlaylist : songs;
+    let currentTrack = currentSong.src.split("/").slice(-1)[0];
+    let index = currentPlaylistToUse.indexOf(currentTrack);
+
+    if (index + 1 < currentPlaylistToUse.length) {
+      playMusic(currentPlaylistToUse[index + 1]);
+    } else {
+      play.src = "play.svg";
+      updatePlayingHighlight(currentTrack);
+    }
   });
 
   // Add an event to volume
